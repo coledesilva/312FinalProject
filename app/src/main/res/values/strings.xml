@@ -2,5 +2,9 @@
     <string name="app_name">FinalProject</string>
     <string name="photo_of_the_day">NASA\'s Photo of the Day</string>
 
+    <string name="image_and_video_button">Image and Video Library</string>
+    <string name="asteroid_button">Asteroid Watcher</string>
+    <string name="mars_weather_button">Mars Weather</string>
+
     <string name="API_KEY">YJAnaNuLHrKq9uW8cYvNkeAnuBbA6CitHSlShwCp</string>
 </resources>
