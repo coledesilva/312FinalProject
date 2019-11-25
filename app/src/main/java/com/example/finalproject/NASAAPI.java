@@ -1,6 +1,12 @@
 package com.example.finalproject;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +29,7 @@ public class NASAAPI {
 
     public void fetchAPOD() {
         String url = contstructAPODString();
-
+        Log.d(TAG, "fetchAPOD: " + url);
         FetchAPODAsync fetchAPOD = new FetchAPODAsync();
         fetchAPOD.execute(url);
     }
@@ -46,6 +52,8 @@ public class NASAAPI {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            ProgressBar progress = (ProgressBar) mainActivity.findViewById(R.id.homeScreenProgressBar);
+            progress.setVisibility(View.VISIBLE);
         }
 
 
@@ -56,14 +64,13 @@ public class NASAAPI {
             try{
                 URL urlObj = new URL(url);
 
-
-                HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
+                HttpURLConnection connection1 = (HttpURLConnection) urlObj.openConnection();
                 // if we get here then successfully opened URL over HTTP protocol
 
                 String jsonResult = "";
                 // char by char we are going to build the json string from an input stream
-                InputStream in = connection.getInputStream();
-                InputStreamReader reader = new InputStreamReader(in);
+                InputStream in1 = connection1.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in1);
                 int data = reader.read();
                 while(data != -1) { // -1 is returned at end of input stream
                     jsonResult += (char) data;
@@ -71,8 +78,8 @@ public class NASAAPI {
                 }
 
                 JSONObject jsonObject = new JSONObject(jsonResult);
-                return parsePhoto(jsonObject);
 
+                return parsePhoto(jsonObject);
             }
             catch(MalformedURLException e){
                 e.printStackTrace();
@@ -106,8 +113,61 @@ public class NASAAPI {
         @Override
         protected void onPostExecute(String[] s) {
             super.onPostExecute(s);
-
+            /*
+            ProgressBar progress = (ProgressBar) mainActivity.findViewById(R.id.homeScreenProgressBar);
+            progress.setVisibility(View.GONE); */
             mainActivity.receivedAPOD(s);
         }
     }
+
+    public void fetchPhotoBitmap(String photoURL){
+        FetchPhotoAsyncTask asyncTask = new FetchPhotoAsyncTask();
+        asyncTask.execute(photoURL);
+    }
+
+    class FetchPhotoAsyncTask extends AsyncTask<String, Void, Bitmap> {
+
+        public FetchPhotoAsyncTask() {
+            super();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            ProgressBar progress = (ProgressBar) mainActivity.findViewById(R.id.homeScreenProgressBar);
+            progress.setVisibility(View.VISIBLE);
+        }
+
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+
+            Bitmap bitmap = null;
+
+            try {
+                URL url = new URL(strings[0]);
+                HttpURLConnection urlConnection = (HttpURLConnection)
+                        url.openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+                bitmap = BitmapFactory.decodeStream(in);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bitmap;
+        }
+
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            ProgressBar progress = (ProgressBar) mainActivity.findViewById(R.id.homeScreenProgressBar);
+            progress.setVisibility(View.GONE);
+            mainActivity.receivedPhotoBitmap(bitmap);
+        }
+    }
+
 }
