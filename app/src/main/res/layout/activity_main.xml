@@ -71,21 +71,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/image_and_video_button" />
+            android:text="@string/image_and_video_button"
+            android:onClick="onButtonClick" />
 
         <Button
             android:id="@+id/astroids"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/asteroid_button" />
+            android:text="@string/asteroid_button"
+            android:onClick="onButtonClick" />
 
         <Button
-            android:id="@+id/marsWeatherButton"
+            android:id="@+id/marsWeather"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/mars_weather_button" />
+            android:text="@string/mars_weather_button"
+            android:onClick="onButtonClick" />
     </LinearLayout>
 
 

@@ -5,7 +5,10 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -165,6 +168,7 @@ public class NASAAPI {
             super.onPostExecute(bitmap);
             ProgressBar progress = (ProgressBar) mainActivity.findViewById(R.id.homeScreenProgressBar);
             progress.setVisibility(View.GONE);
+
             mainActivity.receivedPhotoBitmap(bitmap);
         }
     }
