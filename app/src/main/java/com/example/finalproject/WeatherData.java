@@ -1,5 +1,7 @@
 package com.example.finalproject;
 
+import androidx.annotation.NonNull;
+
 public class WeatherData {
     private int solDate;
     private double highTemp;
@@ -7,7 +9,15 @@ public class WeatherData {
     private String season;
     private String earthDate;
 
-    WeatherData(int solDate, double highTemp, double lowTemp, String season, String earthDate) {
+    public WeatherData() {
+        this.solDate = 0;
+        this.highTemp = 0;
+        this.lowTemp = 0;
+        this.season = "";
+        this.earthDate = "";
+    }
+
+    public WeatherData(int solDate, double highTemp, double lowTemp, String season, String earthDate) {
         this.solDate = solDate;
         this.highTemp = highTemp;
         this.lowTemp = lowTemp;
@@ -53,5 +63,17 @@ public class WeatherData {
 
     public void setEarthDate(String earthDate) {
         this.earthDate = earthDate;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        String result = "Sol Date: " + this.solDate + "\n"
+                + "High Temp: " + this.highTemp + "\n"
+                + "Low Temp: " + this.lowTemp + "\n"
+                + "Season: " + this.season + "\n"
+                + "Earth Date: " + this.earthDate + "\n";
+
+        return result;
     }
 }
