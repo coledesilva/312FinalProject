@@ -7,8 +7,6 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -19,7 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FetchPhotoListener{
     private String[] APODInfo;
 
     @Override
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NASAAPI apiAPOD = new NASAAPI(this);
+        FetchAPOD apiAPOD = new FetchAPOD(this);
         apiAPOD.fetchAPOD();
 
         Animation frombot = AnimationUtils.loadAnimation(this, R.anim.frombot);
@@ -70,9 +68,26 @@ public class MainActivity extends AppCompatActivity {
             this.APODInfo = photoInfo;
             String photoURLStr = photoInfo[2];
 
-            NASAAPI fetchingPhoto = new NASAAPI(this);
+            FetchPhoto fetchingPhoto = new FetchPhoto(this);
             fetchingPhoto.fetchPhotoBitmap(photoURLStr);
         }
+    }
+
+    public MainActivity() {
+        super();
+    }
+
+    @Override
+    public void recievePhotoBitmap(Bitmap bitmap) {
+        ImageView APODPhoto = (ImageView) findViewById(R.id.photoOfTheDay);
+        APODPhoto.setImageBitmap(bitmap);
+
+        String photoTitle = APODInfo[0];
+        String photoDate = APODInfo[1];
+        TextView titleAndDate = findViewById(R.id.titleAndDate);
+        titleAndDate.setText(photoTitle + "\n" + photoDate);
+        Animation fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
+        titleAndDate.setAnimation(fadeIn);
     }
 
     public void receivedPhotoBitmap(Bitmap bitmap){

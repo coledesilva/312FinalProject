@@ -5,10 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,14 +17,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class NASAAPI {
+public class FetchAPOD {
     static final String BASE_URL = "https://api.nasa.gov";
 
     static final String TAG = "NASAAPIHelperTag";
 
     MainActivity mainActivity = null;
 
-    public NASAAPI(MainActivity mainActivity) { this.mainActivity = mainActivity; }
+    public FetchAPOD(MainActivity mainActivity) { this.mainActivity = mainActivity; }
 
     public void fetchAPOD() {
         String url = contstructAPODString();
@@ -122,55 +119,5 @@ public class NASAAPI {
         }
     }
 
-    public void fetchPhotoBitmap(String photoURL){
-        FetchPhotoAsyncTask asyncTask = new FetchPhotoAsyncTask();
-        asyncTask.execute(photoURL);
-    }
-
-    class FetchPhotoAsyncTask extends AsyncTask<String, Void, Bitmap> {
-
-        public FetchPhotoAsyncTask() {
-            super();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            ProgressBar progress = (ProgressBar) mainActivity.findViewById(R.id.homeScreenProgressBar);
-            progress.setVisibility(View.VISIBLE);
-        }
-
-
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-
-            Bitmap bitmap = null;
-
-            try {
-                URL url = new URL(strings[0]);
-                HttpURLConnection urlConnection = (HttpURLConnection)
-                        url.openConnection();
-
-                InputStream in = urlConnection.getInputStream();
-                bitmap = BitmapFactory.decodeStream(in);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return bitmap;
-        }
-
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            ProgressBar progress = (ProgressBar) mainActivity.findViewById(R.id.homeScreenProgressBar);
-            progress.setVisibility(View.GONE);
-
-            mainActivity.receivedPhotoBitmap(bitmap);
-        }
-    }
 
 }
