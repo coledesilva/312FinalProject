@@ -1,8 +1,9 @@
 package com.example.finalproject;
 
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -44,6 +46,9 @@ public class FetchMarsWeather {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            ProgressBar pg = (ProgressBar) marsWeatherActivity.findViewById(R.id.weatherProgressBar);
+            pg.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -66,9 +71,8 @@ public class FetchMarsWeather {
                     data = reader.read();
                 }
 
-                Log.d(TAG, "doInBackground: " + jsonResult);
-
                 JSONObject jsonObject = new JSONObject(jsonResult);
+                Log.d(TAG, "doInBackground: " + jsonObject.toString());
 
                 return parseWeather(jsonObject);
             }
@@ -95,20 +99,28 @@ public class FetchMarsWeather {
                 String[] solKeys = new String[sol.length()];
                 for(int i = 0; i < solKeys.length; i++){
                     solKeys[i] = sol.getString(i);
+                    Log.d(TAG, "parseWeather: " + solKeys[i]);
                 }
 
                 for(int i = 0; i < weatherData.length; i++){
                     WeatherData data = new WeatherData();
                     // setting sol date
-                    data.setSolDate(Integer.parseInt(solKeys[i]));
+                    data.setSolDate(solKeys[i]);
 
                     JSONObject specificSol = object.getJSONObject(solKeys[i]);
 
                     // getting temp data and setting it in data obj
                     JSONObject tempData = specificSol.getJSONObject("AT");
-                    Double maxTemp = tempData.getDouble("mx");
+                    Log.d(TAG, "parseWeather: " + tempData.toString());
+
+                    Double maxTemp = BigDecimal.valueOf(tempData.getDouble("mx")).doubleValue();
+                    Log.d(TAG, "parseWeather: " + maxTemp);
                     data.setHighTemp(maxTemp);
-                    Double minTemp = tempData.getDouble("mn");
+                    Double avgTemp = BigDecimal.valueOf(tempData.getDouble("av")).doubleValue();
+                    Log.d(TAG, "parseWeather: " + avgTemp);
+                    data.setAvgTemp(avgTemp);
+                    Double minTemp = BigDecimal.valueOf(tempData.getDouble("mn")).doubleValue();
+                    Log.d(TAG, "parseWeather: " + minTemp);
                     data.setLowTemp(minTemp);
 
                     // getting, parsing, and setting earth date
@@ -118,6 +130,7 @@ public class FetchMarsWeather {
 
                     String season = specificSol.getString("Season");
                     data.setSeason(season);
+
 
                     weatherData[i] = data;
                 }
@@ -133,12 +146,54 @@ public class FetchMarsWeather {
 
         public String parseDate(String str) {
             String[] info = str.split("[T]{1}");
-            return info[0];
+
+            String tmpDate = info[0];
+            String[] unfinishedDate = tmpDate.split("[-]{1}");
+            String result = returnStringMonth(unfinishedDate[1]) + " " + unfinishedDate[2] + ", " + unfinishedDate[0];
+            return result;
+        }
+
+        public String returnStringMonth(String month){
+            switch(month) {
+                case "01":
+                    return "January";
+                case "02":
+                    return "February";
+                case "03":
+                    return "March";
+                case "04":
+                    return "April";
+                case "05":
+                    return "May";
+                case "06":
+                    return "June";
+                case "07":
+                    return "July";
+                case "08":
+                    return "August";
+                case "09":
+                    return "September";
+                case "10":
+                    return "October";
+                case "11":
+                    return "November";
+                case "12":
+                    return "December";
+            }
+            return "";
         }
 
         @Override
         protected void onPostExecute(WeatherData[] weatherData) {
             super.onPostExecute(weatherData);
+
+            ProgressBar pg = (ProgressBar) marsWeatherActivity.findViewById(R.id.weatherProgressBar);
+            pg.setVisibility(View.GONE);
+
+            for(int i = 0; i < weatherData.length; i++) {
+                Log.d(TAG, "recievedWeatherData: " + weatherData[i]);
+            }
+
             marsWeatherActivity.recievedWeatherData(weatherData);
         }
     }

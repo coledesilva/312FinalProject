@@ -3,33 +3,36 @@ package com.example.finalproject;
 import androidx.annotation.NonNull;
 
 public class WeatherData {
-    private int solDate;
+    private String solDate;
     private double highTemp;
+    private double avgTemp;
     private double lowTemp;
     private String season;
     private String earthDate;
 
     public WeatherData() {
-        this.solDate = 0;
+        this.solDate = "";
         this.highTemp = 0;
+        this.avgTemp = 0;
         this.lowTemp = 0;
         this.season = "";
         this.earthDate = "";
     }
 
-    public WeatherData(int solDate, double highTemp, double lowTemp, String season, String earthDate) {
+    public WeatherData(String solDate, double highTemp, double avgTemp, double lowTemp, String season, String earthDate) {
         this.solDate = solDate;
         this.highTemp = highTemp;
+        this.avgTemp = avgTemp;
         this.lowTemp = lowTemp;
         this.season = season;
         this.earthDate = earthDate;
     }
 
-    public int getSolDate() {
+    public String getSolDate() {
         return solDate;
     }
 
-    public void setSolDate(int solDate) {
+    public void setSolDate(String solDate) {
         this.solDate = solDate;
     }
 
@@ -64,6 +67,10 @@ public class WeatherData {
     public void setEarthDate(String earthDate) {
         this.earthDate = earthDate;
     }
+
+    public double getAvgTemp() { return avgTemp; }
+
+    public void setAvgTemp(double avgTemp) { this.avgTemp = avgTemp; }
 
     @NonNull
     @Override
