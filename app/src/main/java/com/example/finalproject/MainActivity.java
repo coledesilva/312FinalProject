@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity implements FetchPhotoListene
         Button activityButton1 = (Button) findViewById(R.id.imagesAndVideos);
         activityButton1.startAnimation(frombot);
 
-        Button activityButton2 = (Button) findViewById(R.id.astroids);
-        activityButton2.startAnimation(frombot);
-
         Button activityButton3 = (Button) findViewById(R.id.marsWeather);
         activityButton3.startAnimation(frombot);
 
@@ -47,11 +44,6 @@ public class MainActivity extends AppCompatActivity implements FetchPhotoListene
             case R.id.imagesAndVideos:
                 Intent intent1 = new Intent(MainActivity.this, ImageAndVideoActivity.class);
                 startActivity(intent1);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                break;
-            case R.id.astroids:
-                Intent intent2 = new Intent(MainActivity.this, AsteroidWatcherActivity.class);
-                startActivity(intent2);
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.marsWeather:
