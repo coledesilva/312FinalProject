@@ -21,7 +21,7 @@ import java.net.URL;
 
 public class ImageAndVideoActivity extends AppCompatActivity {
     MediaPlayer mp = null;
-    private String[] videoInfo;
+    private NasaMedia[] mediaInfo;
     VideoView videoView;
 
     @Override
@@ -33,16 +33,13 @@ public class ImageAndVideoActivity extends AppCompatActivity {
         fetchVideo.fetchImgOrVideo();
     }
 
-    public void receivedVideo(String[] videoInfo){
-        if(videoInfo != null) {
-            this.videoInfo = videoInfo;
+    public void receivedMedia(NasaMedia[] mediaInfo){
+        if(mediaInfo != null) {
+            this.mediaInfo = mediaInfo;
 
-            String videoUrl = videoInfo[0];
-            String photoDate = videoInfo[1];
-            String photoDesc = videoInfo[2];
-
-            NasaLibrarySearch librarySearch = new NasaLibrarySearch(this);
-            playVideo(videoView, videoUrl);
+            if(mediaInfo[0].getMediaType().equalsIgnoreCase("video")){
+                playVideo(videoView, mediaInfo[0].getMediaLink());
+            }
         }
     }
 
