@@ -6,7 +6,7 @@
     <string name="asteroid_button">Asteroid Watcher</string>
     <string name="mars_weather_button">Mars Weather</string>
 
-    <string name="mars_weather_activity_title">Weather at Elysium Planitia</string>
+    <string name="mars_weather_activity_title"><u>Weather at Elysium Planitia</u></string>
     <string name="sol_text">Sol</string>
     <string name="high_temp">High:</string>
     <string name="avg_temp">Avg:</string>
