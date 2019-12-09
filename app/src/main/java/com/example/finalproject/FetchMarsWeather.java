@@ -190,10 +190,6 @@ public class FetchMarsWeather {
             ProgressBar pg = (ProgressBar) marsWeatherActivity.findViewById(R.id.weatherProgressBar);
             pg.setVisibility(View.GONE);
 
-            for(int i = 0; i < weatherData.length; i++) {
-                Log.d(TAG, "recievedWeatherData: " + weatherData[i]);
-            }
-
             marsWeatherActivity.recievedWeatherData(weatherData);
         }
     }
