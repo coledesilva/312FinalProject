@@ -70,7 +70,7 @@ public class FetchMarsWeather {
                     jsonResult += (char) data;
                     data = reader.read();
                 }
-
+                reader.close();
                 JSONObject jsonObject = new JSONObject(jsonResult);
                 Log.d(TAG, "doInBackground: " + jsonObject.toString());
 
