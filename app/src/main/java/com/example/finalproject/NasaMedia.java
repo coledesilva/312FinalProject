@@ -1,6 +1,8 @@
 package com.example.finalproject;
 
-public class NasaMedia {
+import java.io.Serializable;
+
+public class NasaMedia implements Serializable {
 
     private String title;
     private String description;

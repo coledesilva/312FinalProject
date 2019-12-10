@@ -86,19 +86,5 @@ public class MainActivity extends AppCompatActivity implements FetchPhotoListene
         Animation fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
         titleAndDate.setAnimation(fadeIn);
     }
-
-    public void receivedPhotoBitmap(Bitmap bitmap){
-        ImageView APODPhoto = (ImageView) findViewById(R.id.photoOfTheDay);
-        APODPhoto.setImageBitmap(bitmap);
-
-        String photoTitle = APODInfo[0];
-        String photoDate = APODInfo[1];
-        TextView titleAndDate = findViewById(R.id.titleAndDate);
-        titleAndDate.setText(photoTitle + "\n" + photoDate);
-        Animation fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
-        titleAndDate.setAnimation(fadeIn);
-    }
-
-
 }
 

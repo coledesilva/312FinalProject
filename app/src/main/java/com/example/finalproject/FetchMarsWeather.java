@@ -5,17 +5,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class FetchMarsWeather {
     static final String TAG = "FetchMarsWeatherTag";
@@ -60,18 +62,13 @@ public class FetchMarsWeather {
 
                 HttpURLConnection connection1 = (HttpURLConnection) urlObj.openConnection();
                 // if we get here then successfully opened URL over HTTP protocol
+                connection1.connect();
 
-                String jsonResult = "";
-                // char by char we are going to build the json string from an input stream
                 InputStream in1 = connection1.getInputStream();
-                InputStreamReader reader = new InputStreamReader(in1);
-                int data = reader.read();
-                while(data != -1) { // -1 is returned at end of input stream
-                    jsonResult += (char) data;
-                    data = reader.read();
-                }
-                reader.close();
-                JSONObject jsonObject = new JSONObject(jsonResult);
+                StringWriter writer = new StringWriter();
+                IOUtils.copy(in1, writer, StandardCharsets.UTF_8);
+                String jsonResponse = writer.toString();
+                JSONObject jsonObject = new JSONObject(jsonResponse);
                 Log.d(TAG, "doInBackground: " + jsonObject.toString());
 
                 return parseWeather(jsonObject);

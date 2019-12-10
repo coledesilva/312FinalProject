@@ -1,73 +1,120 @@
 package com.example.finalproject;
 
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.media.MediaPlayer;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.MediaController;
-import android.widget.TextView;
-import android.widget.VideoView;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
-import java.net.URI;
-import java.net.URL;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+
+import com.google.android.material.snackbar.Snackbar;
+
 
 public class ImageAndVideoActivity extends AppCompatActivity {
-    MediaPlayer mp = null;
-    private NasaMedia[] mediaInfo;
-    VideoView videoView;
+    private static final String TAG = "ImageAndVideoActivity";
+    private NasaMedia[] mediaInfo = null;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        videoView = (VideoView) findViewById(R.id.videoView);
         setContentView(R.layout.activity_image_and_video);
-        NasaLibrarySearch fetchVideo = new NasaLibrarySearch(this);
-        fetchVideo.fetchImgOrVideo();
-    }
 
-    public void receivedMedia(NasaMedia[] mediaInfo){
-        if(mediaInfo != null) {
-            this.mediaInfo = mediaInfo;
+        ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
+        pb.setVisibility(View.GONE);
 
-            if(mediaInfo[0].getMediaType().equalsIgnoreCase("video")){
-                playVideo(videoView, mediaInfo[0].getMediaLink());
+        listView = (ListView) findViewById(R.id.listOfResults);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                NasaMedia media = (NasaMedia) adapterView.getItemAtPosition(i);
+                Log.d(TAG, "onItemClick: " + media.getMediaLink() + " " + media.getMediaType());
+                Intent intent = new Intent(ImageAndVideoActivity.this, DisplayMediaActivity.class);
+                intent.putExtra("mediaObj", media);
+                startActivity(intent);
             }
-        }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                return true; // so the onItemClick() callback is not also called
+            }
+        });
+
+        Button searchButton = (Button) findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                EditText input = (EditText) findViewById(R.id.searchInput);
+
+                String strInput = input.getText().toString();
+                if(strInput.equals("") || strInput.equals(" ")) {
+                    Snackbar.make(listView, R.string.search_error, Snackbar.LENGTH_SHORT).show();
+                }
+                else{
+                    NasaLibrarySearch fetchVideo = new NasaLibrarySearch(ImageAndVideoActivity.this);
+                    fetchVideo.fetchImgOrVideo(strInput);
+                }
+            }
+        });
     }
 
+    public void receivedMedia(NasaMedia[] mediaInfoArr){
+        if(mediaInfoArr != null && mediaInfoArr.length > 0) {
+            this.mediaInfo = mediaInfoArr;
 
-    public void playVideo(View view, String url) {
-        videoView.setVisibility(View.VISIBLE);
+            ArrayAdapter<NasaMedia> arrayAdapter = new ArrayAdapter<NasaMedia>(this, R.layout.nasa_media_row, R.id.media_title, mediaInfo){
+                @NonNull
+                @Override
+                public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                    // need to write code in here
+                    View view = super.getView(position, convertView, parent);
 
-        // let's add controls to our videoview
-        MediaController mc = new MediaController(this);
-        // let mc know about its videoview
-        // let the videoview know about its mediacontroller
-        mc.setAnchorView(videoView);
-        videoView.setMediaController(mc);
-        // save state
-        // 1. onPause()/onResume(): the app loses focus. save position with a field
-        // 2. onSaveInstanceState()/onCreate(): rotate device, change config etc.
-        // 3. SharedPreferences: save state across app sessions
+                    NasaMedia mediaObj = mediaInfo[position];
 
-        // we can play videos
-        // 1. in our project (res/raw) (see notes on Google Drive for an example)
-        //videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.sample_video);
-        // 2. already on the user's device
-        // 3. that we stream from a url (in this example)
-        String urlToStream = url;
-        // we need a Uri object to represent the url
-        // when we learned about implicit intents we used Uri for a webpage
-        Uri uri = Uri.parse(urlToStream);
-        videoView.setVideoURI(uri);
-        videoView.start();
+                    TextView title = (TextView) view.findViewById(R.id.media_title); // don't forget the view.
+                    title.setText(mediaObj.getTitle());
+
+                    TextView description = (TextView) view.findViewById(R.id.media_desc); // don't forget the view.
+                    if (mediaObj.getDescription().length() > 80){
+                        String smallDesc = "";
+                        for(int i = 0; i < 80; i++) {
+                            smallDesc += mediaObj.getDescription().charAt(i);
+                        }
+                        smallDesc += "...";
+                        description.setText(smallDesc);
+                    }
+                    else {
+                        description.setText(mediaObj.getDescription());
+                    }
+
+                    TextView mediaType = (TextView) view.findViewById(R.id.media_type); // don't forget the view.
+                    mediaType.setText(mediaObj.getMediaType());
+
+                    return view;
+                }
+            };
+
+            listView.setAdapter(arrayAdapter);
+        }
+        else {
+            Snackbar.make(listView, R.string.no_search_results, Snackbar.LENGTH_SHORT).show();
+        }
     }
 }

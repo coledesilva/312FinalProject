@@ -1,17 +1,35 @@
 <resources>
     <string name="app_name">FinalProject</string>
-    <string name="photo_of_the_day">NASA\'s Photo of the Day</string>
 
+    <!-- Main Activity Strings -->
+    <string name="photo_of_the_day">NASA\'s Photo of the Day</string>
     <string name="image_and_video_button">Image and Video Library</string>
     <string name="asteroid_button">Asteroid Watcher</string>
     <string name="mars_weather_button">Mars Weather</string>
 
+    <!-- Mars Weather Activity Strings -->
     <string name="mars_weather_activity_title"><u>Weather at Elysium Planitia</u></string>
     <string name="sol_text">Sol</string>
     <string name="high_temp">High:</string>
     <string name="avg_temp">Avg:</string>
     <string name="low_temp">Low:</string>
     <string name="degrees_f">°F</string>
+
+    <!-- Image and Video Library Activity Strings -->
+    <string name="search_prompt">Search:</string>
+    <string name="search_button">Go!</string>
+    <string name="media_type">Media Type:</string>
+    <string name="search_error">Invalid Search Input!</string>
+    <string name="no_search_results">No search results!</string>
+    <string name="media_title_label"><u>Title</u></string>
+    <string name="media_desc_label"><u>Description</u></string>
+    <string name="media_type_label"><u>Media Type</u></string>
+
+
+    <!-- Display Media Activity Strings -->
+
+
+    <!-- Scavenger Hunt Strings -->
     <string name="scavenger_hunt">Scavenger Hunt</string>
     <string name="huntText1">For your first scavenger hunt item, check out the current weather on
         mars. For extra learning, search the internet for more information about weather patterns on
@@ -19,6 +37,6 @@
     </string>
     <string name="huntTitle1">Mars Weather</string>
 
-
+    <!-- API Key String -->
     <string name="API_KEY">YJAnaNuLHrKq9uW8cYvNkeAnuBbA6CitHSlShwCp</string>
 </resources>

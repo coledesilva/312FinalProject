@@ -1,27 +1,26 @@
 package com.example.finalproject;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class FetchAPOD {
     static final String BASE_URL = "https://api.nasa.gov";
 
-    static final String TAG = "NASAAPIHelperTag";
+    static final String TAG = "FetchAPOD";
 
     MainActivity mainActivity = null;
 
@@ -52,7 +51,7 @@ public class FetchAPOD {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            ProgressBar progress = (ProgressBar) mainActivity.findViewById(R.id.homeScreenProgressBar);
+            ProgressBar progress = (ProgressBar) mainActivity.findViewById(R.id.progressBar);
             progress.setVisibility(View.VISIBLE);
         }
 
@@ -66,18 +65,15 @@ public class FetchAPOD {
 
                 HttpURLConnection connection1 = (HttpURLConnection) urlObj.openConnection();
                 // if we get here then successfully opened URL over HTTP protocol
+                connection1.connect();
 
-                String jsonResult = "";
-                // char by char we are going to build the json string from an input stream
                 InputStream in1 = connection1.getInputStream();
-                InputStreamReader reader = new InputStreamReader(in1);
-                int data = reader.read();
-                while(data != -1) { // -1 is returned at end of input stream
-                    jsonResult += (char) data;
-                    data = reader.read();
-                }
+                StringWriter writer = new StringWriter();
+                IOUtils.copy(in1, writer, StandardCharsets.UTF_8);
+                String jsonResponse = writer.toString();
 
-                JSONObject jsonObject = new JSONObject(jsonResult);
+                Log.d(TAG, "doInBackground: " + jsonResponse);
+                JSONObject jsonObject = new JSONObject(jsonResponse);
 
                 return parsePhoto(jsonObject);
             }
