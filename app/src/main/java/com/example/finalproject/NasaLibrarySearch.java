@@ -63,7 +63,7 @@ public class NasaLibrarySearch {
         return baseUrl;
     }
 
-    class FetchImageAndVideoAsyncTask extends AsyncTask<String, Void, String[]> {
+    class FetchImageAndVideoAsyncTask extends AsyncTask<String, Void, NasaMedia[]> {
         public FetchImageAndVideoAsyncTask() {
             super();
         }
@@ -76,25 +76,59 @@ public class NasaLibrarySearch {
         }
 
         @Override
-        protected void onPostExecute(String[] strings) {
-            super.onPostExecute(strings);
+        protected void onPostExecute(NasaMedia[] media) {
+            super.onPostExecute(media);
             ProgressBar progress = (ProgressBar) imageAndVideoActivity.findViewById(R.id.progressBar);
             progress.setVisibility(View.GONE);
-            imageAndVideoActivity.receivedVideo(strings);
+            imageAndVideoActivity.receivedMedia(media);
         }
 
-        private String[] parseVideo(JSONObject jsonObject){
-
+        private NasaMedia[] parseVideo(JSONObject jsonObject){
             try{
-                JSONArray items = jsonObject.getJSONArray("items");
-                JSONObject data = items.getJSONObject(0);
-                JSONObject links = data.getJSONObject("links");
-                String videoURL = links.getString("href");
-                Log.d(TAG,videoURL);
-                String videoDate = jsonObject.getString("date_created");
-                String videoDesc = jsonObject.getString("description");
+                JSONObject metadata = jsonObject.getJSONObject("metadata");
+                int numHits = metadata.getInt("total_hits");
 
-                return new String[] {videoURL, videoDate, videoDesc};
+                // limits it so we only get 10 items
+                if(numHits > 10) {
+                    numHits = 10;
+                }
+                NasaMedia[] media = new NasaMedia[numHits];
+
+                // for the 10 items create a new nasamedia obj
+                for(int i = 0; i < numHits; i++){
+                    NasaMedia mediaObj = new NasaMedia();
+                    // get to the right spot in the JSON
+                    JSONObject collection = jsonObject.getJSONObject("collection");
+                    JSONArray items = collection.getJSONArray("items");
+
+                    // add to the nasamedia obj
+                    JSONArray data = items.getJSONArray(0);
+                    mediaObj.setDescription(data.getString(0));
+                    Log.d(TAG, "parseVideo: " + data.getString(0));
+
+                    mediaObj.setTitle(data.getString(3));
+                    Log.d(TAG, "parseVideo: " + data.getString(3));
+
+                    mediaObj.setMediaType(data.getString(6));
+                    Log.d(TAG, "parseVideo: " + data.getString(6));
+
+                    JSONArray links = items.getJSONArray(2);
+
+                    // if its a video then grab the video link
+                    if(mediaObj.getMediaType().equalsIgnoreCase("video")){
+                        mediaObj.setMediaLink(links.getString(3));
+                        Log.d(TAG, "parseVideo: " + links.getString(3));
+
+                    }
+                    else { // if its an image just grab the image link
+                        mediaObj.setMediaLink(links.getString(1));
+                        Log.d(TAG, "parseVideo: " + links.getString(1));
+                    }
+                    // add the nasamedia object to the result output
+                    media[i] = mediaObj;
+                }
+
+                return media;
             }
             catch(JSONException e){
                 e.printStackTrace();
@@ -103,7 +137,7 @@ public class NasaLibrarySearch {
         }
 
         @Override
-        protected String[] doInBackground(String... strings) {
+        protected NasaMedia[] doInBackground(String... strings) {
             String url = strings[0];
             try{
                 URL urlObj = encodeURL(url);
@@ -111,8 +145,12 @@ public class NasaLibrarySearch {
                 HttpURLConnection connection1 = (HttpURLConnection) urlObj.openConnection();
                 // if we get here then successfully opened URL over HTTP protocol
 
+
+                // this below is what is making it load forever...
+                // need to figure out a better way to get inputstream to read faster instead
+                // of char by char.
                 String jsonResult = "";
-                // char by char we are going to build the json string from an input stream
+                //char by char we are going to build the json string from an input stream
                 InputStream in1 = connection1.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in1);
                 int data = reader.read();
@@ -123,6 +161,7 @@ public class NasaLibrarySearch {
                 JSONObject jsonObject = new JSONObject(jsonResult);
                 Log.d(TAG,jsonResult);
                 reader.close();
+
                 return parseVideo(jsonObject);
 
             }
