@@ -51,6 +51,11 @@ public class MainActivity extends AppCompatActivity implements FetchPhotoListene
                 startActivity(intent3);
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
+            case R.id.scavengerHunt:
+                Intent intent4 = new Intent(MainActivity.this, ScavengerHunt.class);
+                startActivity(intent4);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
         }
     }
 

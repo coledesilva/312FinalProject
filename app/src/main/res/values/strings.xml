@@ -12,6 +12,12 @@
     <string name="avg_temp">Avg:</string>
     <string name="low_temp">Low:</string>
     <string name="degrees_f">°F</string>
+    <string name="scavenger_hunt">Scavenger Hunt</string>
+    <string name="huntText1">For your first scavenger hunt item, check out the current weather on
+        mars. For extra learning, search the internet for more information about weather patterns on
+        mars and how solar dates differ from the date system that we use on earth.
+    </string>
+    <string name="huntTitle1">Mars Weather</string>
 
 
     <string name="API_KEY">YJAnaNuLHrKq9uW8cYvNkeAnuBbA6CitHSlShwCp</string>
