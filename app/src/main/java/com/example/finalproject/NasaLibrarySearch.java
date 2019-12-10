@@ -112,18 +112,9 @@ public class NasaLibrarySearch {
                     mediaObj.setMediaType(data.getString(6));
                     Log.d(TAG, "parseVideo: " + data.getString(6));
 
-                    JSONArray links = items.getJSONArray(2);
+                    String mediaLink = items.getString(0);
+                    mediaObj.setMediaLink(returnMedia(mediaLink, data.getString(6)));
 
-                    // if its a video then grab the video link
-                    if(mediaObj.getMediaType().equalsIgnoreCase("video")){
-                        mediaObj.setMediaLink(links.getString(3));
-                        Log.d(TAG, "parseVideo: " + links.getString(3));
-
-                    }
-                    else { // if its an image just grab the image link
-                        mediaObj.setMediaLink(links.getString(1));
-                        Log.d(TAG, "parseVideo: " + links.getString(1));
-                    }
                     // add the nasamedia object to the result output
                     media[i] = mediaObj;
                 }
@@ -134,6 +125,44 @@ public class NasaLibrarySearch {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        private String returnMedia(String url, String mediaType) {
+            try{
+                URL urlObj = encodeURL(url);
+
+                HttpURLConnection connection1 = (HttpURLConnection) urlObj.openConnection();
+                // if we get here then successfully opened URL over HTTP protocol
+
+                String jsonResult = "";
+                //char by char we are going to build the json string from an input stream
+                InputStream in1 = connection1.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in1);
+                int data = reader.read();
+                while(data != -1) { // -1 is returned at end of input stream
+                    jsonResult += (char) data;
+                    data = reader.read();
+                }
+                JSONArray jsonArray = new JSONArray(jsonResult);
+                reader.close();
+
+                if(mediaType.equalsIgnoreCase("video")) {
+                    return jsonArray.getString(2);
+                }
+                else if(mediaType.equalsIgnoreCase("image")) {
+                    return jsonArray.getString(1);
+                }
+            }
+            catch (MalformedURLException ex){
+                ex.printStackTrace();
+            }
+            catch (IOException ex){
+                ex.printStackTrace();
+            }
+            catch (JSONException ex){
+                ex.printStackTrace();
+            }
+            return "";
         }
 
         @Override
