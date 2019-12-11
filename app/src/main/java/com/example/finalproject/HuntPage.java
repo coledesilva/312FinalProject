@@ -17,6 +17,7 @@ public class HuntPage extends AppCompatActivity {
         if(intent!=null) {
             String content = intent.getStringExtra("content");
             huntTextView = (TextView)findViewById(R.id.huntText);
+            huntTextView.setTextSize(35);
             huntTextView.setText(content);
         }
     }

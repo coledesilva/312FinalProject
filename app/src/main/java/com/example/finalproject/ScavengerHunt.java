@@ -39,6 +39,7 @@ public class ScavengerHunt extends AppCompatActivity {
                 HuntText clickedText = huntList.get(position);
                 intent.putExtra("position", position);
                 intent.putExtra("content", clickedText.getHuntMessage());
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 startActivity(intent);
             }
         });
@@ -64,7 +65,25 @@ public class ScavengerHunt extends AppCompatActivity {
     private void populateArrayList(){
         HuntText huntText1 = new HuntText(getResources().getString(R.string.huntText1)
                 ,getResources().getString(R.string.huntTitle1));
+        HuntText huntText2 = new HuntText(getResources().getString(R.string.huntText2)
+                ,getResources().getString(R.string.huntTitle2));
+        HuntText huntText3 = new HuntText(getResources().getString(R.string.huntText3)
+                ,getResources().getString(R.string.huntTitle3));
+        HuntText huntText4 = new HuntText(getResources().getString(R.string.huntText4)
+                ,getResources().getString(R.string.huntTitle4));
+        HuntText huntText5 = new HuntText(getResources().getString(R.string.huntText5)
+                ,getResources().getString(R.string.huntTitle5));
+        HuntText huntText6 = new HuntText(getResources().getString(R.string.huntText6)
+                ,getResources().getString(R.string.huntTitle6));
+        HuntText huntText7 = new HuntText(getResources().getString(R.string.huntText7)
+                ,getResources().getString(R.string.huntTitle7));
         huntList.add(huntText1);
+        huntList.add(huntText2);
+        huntList.add(huntText3);
+        huntList.add(huntText4);
+        huntList.add(huntText5);
+        huntList.add(huntText6);
+        huntList.add(huntText7);
     }
 
     @Override

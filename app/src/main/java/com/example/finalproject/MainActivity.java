@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements FetchPhotoListene
         String photoTitle = APODInfo[0];
         String photoDate = APODInfo[1];
         TextView titleAndDate = findViewById(R.id.titleAndDate);
+        titleAndDate.setTextColor(getResources().getColor(R.color.white));
         titleAndDate.setText(photoTitle + "\n" + photoDate);
         Animation fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
         titleAndDate.setAnimation(fadeIn);

@@ -14,7 +14,9 @@
         android:layout_columnWeight="1"
         android:gravity="center|fill_vertical"
         android:textSize="16sp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        />
     <TextView
         android:id="@+id/earthDate_row"
         android:layout_width="0dp"
@@ -24,7 +26,9 @@
         android:layout_rowWeight="1"
         android:gravity="center|fill_vertical"
         android:textSize="16sp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
+        />
 
     <TextView
         android:id="@+id/solHighTemp_row"
@@ -37,7 +41,9 @@
         android:gravity="center|fill_vertical"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        />
 
     <TextView
         android:id="@+id/solLowTemp_row"
@@ -50,5 +56,7 @@
         android:gravity="center|fill_vertical"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        />
 </GridLayout>

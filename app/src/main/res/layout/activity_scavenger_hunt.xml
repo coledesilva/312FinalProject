@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScavengerHunt">
+    tools:context=".ScavengerHunt"
+    android:background="@android:color/background_dark">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,8 +35,32 @@
         mars. For extra learning, search the internet for more information about weather patterns on
         mars and how solar dates differ from the date system that we use on earth.
     </string>
-    <string name="huntTitle1">Mars Weather</string>
-
+    <string name="huntText2">Now that you have got an idea of the weather up on the red
+    planet. Its time to learn about the research nasa is doing at the moment. Open up the image
+    and video library and check out some videos about the mars rover!</string>
+    <string name="huntText3">Learn about one of the most tragic events in the history of
+    the United States space program by finding some information about the challenger disaster.
+    Who was affected? Why was the mission being undertaken? What changes were made to make
+    spaceflight safer?</string>
+    <string name="huntText4">You probably noticed the cool space photo when you opened up the
+    app. For a learning experience search the content of the photo. Was the photo of a planet?
+    A star? Something else? Where is the object located?</string>
+    <string name="huntText5">Can you find a video from the original moon landing? Compare the
+    technology and appearance of the space craft with footage of
+        a more modern spacecraft landing</string>
+    <string name="huntText6">Have you ever seen one of the famous movies about the apollo missions?
+    Find some footage from the apollo 11 landing? If you have seen the movies, how does the
+    movie compare factually to the actual events?</string>
+    <string name="huntText7">What happens in the mission control room is one of the most
+    important aspects of a successful space landing. Find some footage of what goes on in the room and
+    learn more about the process of launching a rocket into space.</string>
+    <string name="huntTitle1">1. Mars Weather</string>
+    <string name="huntTitle2">2. Mars Rover</string>
+    <string name="huntTitle3">3. Challenger Tragedy</string>
+    <string name="huntTitle4">4. Photo of the Day</string>
+    <string name="huntTitle5">5. Lunar Landing</string>
+    <string name="huntTitle6">6. Apollo 11 Mission</string>
+    <string name="huntTitle7">7. Mission Control</string>
     <!-- API Key String -->
     <string name="API_KEY">YJAnaNuLHrKq9uW8cYvNkeAnuBbA6CitHSlShwCp</string>
 </resources>

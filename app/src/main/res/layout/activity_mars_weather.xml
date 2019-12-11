@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MarsWeatherActivity">
+    tools:context=".MarsWeatherActivity"
+    android:background="@drawable/mars1"
+    >
 
     <ProgressBar
         android:id="@+id/weatherProgressBar"
@@ -27,7 +29,9 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"
+        />
 
     <TextView
         android:id="@+id/currentDateSol"
@@ -37,7 +41,9 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/marsWeatherTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/marsWeatherTitle"
+        android:textColor="@color/white"
+        />
 
     <TextView
         android:id="@+id/currEarthDate"
@@ -48,7 +54,9 @@
         app:layout_constraintBottom_toTopOf="@id/currSolAvgTemp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/currentDateSol" />
+        app:layout_constraintTop_toBottomOf="@id/currentDateSol"
+        android:textColor="@color/white"
+        />
 
     <TextView
         android:id="@+id/currSolLowTemp"
@@ -58,7 +66,9 @@
         android:textSize="25sp"
         app:layout_constraintEnd_toStartOf="@+id/currSolAvgTemp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currEarthDate" />
+        app:layout_constraintTop_toBottomOf="@+id/currEarthDate"
+        android:textColor="@color/white"
+        />
 
     <TextView
         android:id="@+id/currSolAvgTemp"
@@ -68,7 +78,9 @@
         android:textSize="25sp"
         app:layout_constraintEnd_toStartOf="@+id/currSolHighTemp"
         app:layout_constraintStart_toEndOf="@+id/currSolLowTemp"
-        app:layout_constraintTop_toBottomOf="@+id/currEarthDate" />
+        app:layout_constraintTop_toBottomOf="@+id/currEarthDate"
+        android:textColor="@color/white"
+        />
 
     <TextView
         android:id="@+id/currSolHighTemp"
@@ -78,7 +90,9 @@
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/currSolAvgTemp"
-        app:layout_constraintTop_toBottomOf="@+id/currEarthDate" />
+        app:layout_constraintTop_toBottomOf="@+id/currEarthDate"
+        android:textColor="@color/white"
+        />
 
     <ListView
         android:id="@+id/weatherListView"
@@ -88,6 +102,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/currSolAvgTemp" />
+        app:layout_constraintTop_toBottomOf="@id/currSolAvgTemp"
+        android:textColor="@color/white"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
