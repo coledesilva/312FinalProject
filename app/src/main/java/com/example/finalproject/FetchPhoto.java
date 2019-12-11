@@ -16,12 +16,17 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 
 public class FetchPhoto {
     private Activity activity;
+    private boolean flag;
     private static final String TAG = "FetchPhoto";
 
-    public FetchPhoto(Context context) { this.activity = (Activity) context; }
+    public FetchPhoto(Context context, boolean flag) {
+        this.activity = (Activity) context;
+        this.flag = flag;
+    }
     public void fetchPhotoBitmap(String photoURL){
         FetchPhotoAsyncTask asyncTask = new FetchPhotoAsyncTask();
         asyncTask.execute(photoURL);
@@ -43,27 +48,35 @@ public class FetchPhoto {
 
         @Override
         protected Bitmap doInBackground(String... strings) {
+            URL url = null;
+
+            if(flag == true){
+                String strUrl = strings[0];
+                strUrl += "?api_key" + activity.getString(R.string.API_KEY);
+                url = encodeURL(strUrl);
+            }
+            else {
+                url = encodeURL(strings[0]);
+            }
 
             Bitmap bitmap = null;
 
             try {
-                URL url = encodeURL(strings[0]);
-                HttpURLConnection urlConnection = (HttpURLConnection)
-                        url.openConnection();
-                
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setDoInput(true);
+                urlConnection.connect();
+
                 Log.d(TAG, "doInBackground: " + url.toString());
                 InputStream in = urlConnection.getInputStream();
-                bitmap = BitmapFactory.decodeStream(in);
-                if(bitmap == null) {
-                    Log.d(TAG, "doInBackground: bit is null :/");
-                }
+
+                return BitmapFactory.decodeStream(in);
                 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return bitmap;
+            return null;
         }
 
         private URL encodeURL(String url){

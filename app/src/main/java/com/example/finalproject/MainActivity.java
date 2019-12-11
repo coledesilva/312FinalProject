@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements FetchPhotoListene
             this.APODInfo = photoInfo;
             String photoURLStr = photoInfo[2];
 
-            FetchPhoto fetchingPhoto = new FetchPhoto(this);
+            FetchPhoto fetchingPhoto = new FetchPhoto(this, false);
             fetchingPhoto.fetchPhotoBitmap(photoURLStr);
         }
     }

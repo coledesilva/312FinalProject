@@ -47,10 +47,11 @@ public class DisplayMediaActivity extends AppCompatActivity implements FetchPhot
                 videoView.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
 
-                FetchPhoto fetchingPhoto = new FetchPhoto(this);
+                FetchPhoto fetchingPhoto = new FetchPhoto(this, true);
                 fetchingPhoto.fetchPhotoBitmap(media.getMediaLink());
 
                 title.setText(media.getTitle());
+                desc.setMovementMethod(new ScrollingMovementMethod());
                 desc.setText(media.getDescription());
             }
         }

@@ -9,17 +9,19 @@
         android:id="@+id/mediaTitleDisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="textStart"
         android:textSize="30sp"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/mediaDescDisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxHeight="150dp"
         android:textAlignment="textStart"
         android:textSize="15sp"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:scrollbars="vertical"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

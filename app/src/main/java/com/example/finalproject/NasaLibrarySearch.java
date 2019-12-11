@@ -118,10 +118,9 @@ public class NasaLibrarySearch {
 
                     mediaObj.setMediaType(data.getString("media_type"));
 
+                    String nasaId = data.getString("nasa_id");
 
-                    String mediaLink = tempItems.getString("href");
-
-                    mediaObj.setMediaLink(returnMedia(mediaLink, data.getString("media_type")));
+                    mediaObj.setMediaLink(returnMedia(nasaId, data.getString("media_type")));
 
                     // add the nasamedia object to the result output
                     media[i] = mediaObj;
@@ -135,10 +134,13 @@ public class NasaLibrarySearch {
             return null;
         }
 
-        private String returnMedia(String url, String mediaType) {
+        private String returnMedia(String nasaId, String mediaType) {
             try{
-                URL urlObj = encodeURL(url);
+                String manifestUrl = BASE_URL;
+                manifestUrl += "/asset/" + nasaId;
+                URL urlObj = encodeURL(manifestUrl);
 
+                Log.d(TAG, "returnMedia: " + urlObj.toString());
                 HttpURLConnection connection1 = (HttpURLConnection) urlObj.openConnection();
                 // if we get here then successfully opened URL over HTTP protocol
 
@@ -146,11 +148,13 @@ public class NasaLibrarySearch {
                 StringWriter writer = new StringWriter();
                 IOUtils.copy(in1, writer, StandardCharsets.UTF_8);
                 String jsonResponse = writer.toString();
-                JSONArray jsonArray = new JSONArray(jsonResponse);
+                JSONObject jsonObject = new JSONObject(jsonResponse);
+                JSONObject collection = jsonObject.getJSONObject("collection");
+                JSONArray items = collection.getJSONArray("items");
 
-
-                for(int i = 0; i < jsonArray.length(); i++){
-                    String response = jsonArray.getString(i);
+                for(int i = 0; i < items.length(); i++){
+                    JSONObject tempItems = items.getJSONObject(i);
+                    String response = tempItems.getString("href");
 
                     if((response.endsWith("small.jpg") || response.endsWith("medium.jpg"))&& mediaType.equalsIgnoreCase("image")){
                         Log.d(TAG, "returnMedia: " + response);
@@ -163,6 +167,7 @@ public class NasaLibrarySearch {
                         return response;
                     }
                 }
+
             }
             catch (MalformedURLException ex){
                 ex.printStackTrace();
