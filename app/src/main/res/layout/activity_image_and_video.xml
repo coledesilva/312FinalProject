@@ -37,6 +37,7 @@
             android:layout_columnWeight="1"
             android:layout_gravity="center|center_vertical"
             android:text="@string/search_prompt"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <EditText

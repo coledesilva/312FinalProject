@@ -1,4 +1,10 @@
 package com.example.finalproject;
+/**
+ * This is the async task class to fetch a photo from the NASA API
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,7 +14,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -16,7 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class FetchPhoto {
     private Activity activity;
@@ -27,6 +31,11 @@ public class FetchPhoto {
         this.activity = (Activity) context;
         this.flag = flag;
     }
+
+    /**
+     * fetch photo which starts async task
+     * @param photoURL string url of photo to fetch
+     */
     public void fetchPhotoBitmap(String photoURL){
         FetchPhotoAsyncTask asyncTask = new FetchPhotoAsyncTask();
         asyncTask.execute(photoURL);
@@ -100,7 +109,6 @@ public class FetchPhoto {
             }
         }
 
-
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
@@ -109,7 +117,7 @@ public class FetchPhoto {
 
 
             FetchPhotoListener temp = (FetchPhotoListener) activity;
-            temp.recievePhotoBitmap(bitmap);
+            temp.receivePhotoBitmap(bitmap);
         }
     }
 }

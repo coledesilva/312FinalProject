@@ -1,4 +1,10 @@
 package com.example.finalproject;
+/**
+ * This is the HuntText model which stores scavenger hunt information
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 public class HuntText {
     private String huntMessage;

@@ -1,7 +1,12 @@
 package com.example.finalproject;
+/**
+ * This is the scavenger hunt activity which displays the available scavenger hunts in a list view
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridLayout;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +66,9 @@ public class ScavengerHunt extends AppCompatActivity {
         return listView;
     }
 
+    /**
+     * populates the arraylist
+     */
     private void populateArrayList(){
         HuntText huntText1 = new HuntText(getResources().getString(R.string.huntText1)
                 ,getResources().getString(R.string.huntTitle1));

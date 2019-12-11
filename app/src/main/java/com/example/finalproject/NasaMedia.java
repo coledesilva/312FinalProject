@@ -1,4 +1,12 @@
 package com.example.finalproject;
+/**
+ * This is the Nasa Media model which stores information about a particular piece of media from
+ * NASA image and video library.
+ * Uses serializable so that it can be passed in an intent.
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 import java.io.Serializable;
 

@@ -1,22 +1,20 @@
 package com.example.finalproject;
+/**
+ * This is the Mars Weather activity which displays the mars weather info
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
-import java.text.DecimalFormat;
 
 public class MarsWeatherActivity extends AppCompatActivity {
     private static final String TAG = "MarsWeatherActivityTag";
@@ -30,7 +28,11 @@ public class MarsWeatherActivity extends AppCompatActivity {
         fetchWeather.fetchWeather();
     }
 
-    public void recievedWeatherData(WeatherData[] weatherData) {
+    /**
+     * received weather data function which gets weather data array from fetch mars weather async task
+     * @param weatherData array of weather data objects
+     */
+    public void receivedWeatherData(WeatherData[] weatherData) {
         int end = weatherData.length - 1;
 
         TextView currSolDate = (TextView) findViewById(R.id.currentDateSol);

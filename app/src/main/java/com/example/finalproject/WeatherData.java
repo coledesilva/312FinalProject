@@ -1,4 +1,10 @@
 package com.example.finalproject;
+/**
+ * This is the Weather Data model which stores weather information about a particular solar day
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 import androidx.annotation.NonNull;
 

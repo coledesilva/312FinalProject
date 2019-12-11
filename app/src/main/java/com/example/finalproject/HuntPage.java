@@ -1,7 +1,12 @@
 package com.example.finalproject;
+/**
+ * This is the Hunt activity where the information of a particular scavenger hunt is displayed
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;

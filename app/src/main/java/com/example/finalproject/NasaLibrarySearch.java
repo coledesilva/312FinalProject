@@ -1,16 +1,19 @@
 package com.example.finalproject;
+/**
+ * This is the async task class to fetch images and videos information from the NASA image and video library API
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 import android.os.AsyncTask;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -20,7 +23,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.regex.Pattern;
 
 
 public class NasaLibrarySearch {
@@ -33,6 +35,10 @@ public class NasaLibrarySearch {
         this.imageAndVideoActivity = imageAndVideoActivity;
     }
 
+    /**
+     * fetch image or video function which initiates async task
+     * @param searchStr string url of the api request
+     */
     public void fetchImgOrVideo(String searchStr){
         String url = constructImageAndVideoUrl(searchStr);
         Log.d(TAG, "fetchVideo: " + url);
@@ -89,6 +95,11 @@ public class NasaLibrarySearch {
             imageAndVideoActivity.receivedMedia(media);
         }
 
+        /**
+         * parses media objects (not necessarily only videos) from json response
+         * @param jsonObject initial json object of json response
+         * @return an array of nasa media objects
+         */
         private NasaMedia[] parseVideo(JSONObject jsonObject){
             try{
                 JSONObject collection = jsonObject.getJSONObject("collection");
@@ -134,6 +145,12 @@ public class NasaLibrarySearch {
             return null;
         }
 
+        /**
+         * return media function which parses the media link from a get request involving that media object's NASA id
+         * @param nasaId the NASA id of the particular media object
+         * @param mediaType the string representation of the type of media dealing with
+         * @return a string url of the media object's link
+         */
         private String returnMedia(String nasaId, String mediaType) {
             try{
                 String manifestUrl = BASE_URL;

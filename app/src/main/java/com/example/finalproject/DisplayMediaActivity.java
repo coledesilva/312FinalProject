@@ -1,7 +1,12 @@
 package com.example.finalproject;
+/**
+ * This is the display media activity where the media that was selected in image and video activity is displayed
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -60,8 +65,12 @@ public class DisplayMediaActivity extends AppCompatActivity implements FetchPhot
         }
     }
 
+    /**
+     * receive photo bitmap implementation from the FetchPhotoInterface
+     * @param bitmap the bitmap returned from the fetch photo async task
+     */
     @Override
-    public void recievePhotoBitmap(Bitmap bitmap) {
+    public void receivePhotoBitmap(Bitmap bitmap) {
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
         if(bitmap == null) {
             Log.d(TAG, "recievePhotoBitmap: bit is null");
@@ -70,6 +79,10 @@ public class DisplayMediaActivity extends AppCompatActivity implements FetchPhot
         imageView.setImageBitmap(bitmap);
     }
 
+    /**
+     * plays the video in the video view
+     * @param videoUrl the url of the video
+     */
     public void playVideo(String videoUrl) {
         VideoView videoView = (VideoView) findViewById(R.id.videoView);
         // let's add controls to our videoview

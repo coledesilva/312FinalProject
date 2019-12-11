@@ -1,12 +1,15 @@
 package com.example.finalproject;
-
+/**
+ * This is the image and video activity where images and video media are displayed in a list view from the nasa API
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,11 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-
 import com.google.android.material.snackbar.Snackbar;
 
 
@@ -47,6 +47,7 @@ public class ImageAndVideoActivity extends AppCompatActivity {
                 Intent intent = new Intent(ImageAndVideoActivity.this, DisplayMediaActivity.class);
                 intent.putExtra("mediaObj", media);
                 startActivity(intent);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             }
         });
 
@@ -75,6 +76,10 @@ public class ImageAndVideoActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * received media function which gets nasa media array from nasa library search
+     * @param mediaInfoArr an array of nasa media objects
+     */
     public void receivedMedia(NasaMedia[] mediaInfoArr){
         if(mediaInfoArr != null && mediaInfoArr.length > 0) {
             this.mediaInfo = mediaInfoArr;

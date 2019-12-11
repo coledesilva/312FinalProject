@@ -1,12 +1,17 @@
-/**
- *
- * Source for Animation Help: https://www.tutorialspoint.com/android/android_animations.htm
- *
- */
 package com.example.finalproject;
+/**
+ * This is the main activity where the NASA image of the day is displayed
+ * It also provides navigation to other activities in this application
+ *
+ * Sources to cite:
+ *      Source for Animation Help: https://www.tutorialspoint.com/android/android_animations.htm
+ *
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -38,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements FetchPhotoListene
 
     }
 
+    /**
+     * onclick for the buttons on the main activity
+     * @param v the view that has been clicked
+     */
     public void onButtonClick(View v) {
         Button butt = (Button) v;
         switch(butt.getId()){
@@ -55,11 +64,13 @@ public class MainActivity extends AppCompatActivity implements FetchPhotoListene
                 Intent intent4 = new Intent(MainActivity.this, ScavengerHunt.class);
                 startActivity(intent4);
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-
         }
     }
 
-
+    /**
+     * received the APOD from the fetch apod async task
+     * @param photoInfo string array of the apod info
+     */
     public void receivedAPOD(String[] photoInfo){
         if(photoInfo != null) {
             this.APODInfo = photoInfo;
@@ -74,8 +85,12 @@ public class MainActivity extends AppCompatActivity implements FetchPhotoListene
         super();
     }
 
+    /**
+     * receive photo bitmap implementation from the FetchPhotoInterface
+     * @param bitmap the bitmap returned from the fetch photo async task
+     */
     @Override
-    public void recievePhotoBitmap(Bitmap bitmap) {
+    public void receivePhotoBitmap(Bitmap bitmap) {
         ImageView APODPhoto = (ImageView) findViewById(R.id.photoOfTheDay);
         APODPhoto.setImageBitmap(bitmap);
 

@@ -1,4 +1,10 @@
 package com.example.finalproject;
+/**
+ * This is the async task class to fetch the photo of the day from the NASA API
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -26,6 +32,9 @@ public class FetchAPOD {
 
     public FetchAPOD(MainActivity mainActivity) { this.mainActivity = mainActivity; }
 
+    /**
+     * fetch function which starts execution of async task
+     */
     public void fetchAPOD() {
         String url = contstructAPODString();
         Log.d(TAG, "fetchAPOD: " + url);
@@ -33,6 +42,10 @@ public class FetchAPOD {
         fetchAPOD.execute(url);
     }
 
+    /**
+     * constructs the url for the APOD request
+     * @return a string url of the APOD request
+     */
     public String contstructAPODString(){
         String url = BASE_URL;
 
@@ -90,6 +103,11 @@ public class FetchAPOD {
             return null;
         }
 
+        /**
+         * parses photo information from json response
+         * @param jsonObject the base json object from the json response
+         * @return a string array of the photo information
+         */
         private String[] parsePhoto(JSONObject jsonObject){
 
             try{

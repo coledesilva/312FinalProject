@@ -1,15 +1,19 @@
 package com.example.finalproject;
+/**
+ * This is the async task class to fetch a mars weather data from the NASA API
+ * @authors: Cole & Jackson
+ * @version: v1.0
+ * @date: 12/11/2019
+ */
 
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -27,6 +31,9 @@ public class FetchMarsWeather {
 
     public FetchMarsWeather(MarsWeatherActivity marsWeatherActivity) { this.marsWeatherActivity = marsWeatherActivity; }
 
+    /**
+     * fetch function to start async task
+     */
     public void fetchWeather() {
         String url = constructURL();
         Log.d(TAG, "fetchWeather: " + url);
@@ -35,6 +42,10 @@ public class FetchMarsWeather {
         async.execute(url);
     }
 
+    /**
+     * constructs url for get request from weather api
+     * @return a string url for the request from the weather api
+     */
     public String constructURL() {
         String url = BASE_URL;
         url += "/insight_weather";
@@ -86,6 +97,11 @@ public class FetchMarsWeather {
             return null;
         }
 
+        /**
+         * parses weather information from the json response
+         * @param object the initial json object from the json response
+         * @return an array of weather data models containing the necessary information
+         */
         public WeatherData[] parseWeather(JSONObject object) {
             // creating array of weather data obj for 7 days
             WeatherData[] weatherData = new WeatherData[7];
@@ -141,6 +157,11 @@ public class FetchMarsWeather {
 
         }
 
+        /**
+         * parses the date into something easily readable
+         * @param str the initial string of the date
+         * @return a nice formatted date string
+         */
         public String parseDate(String str) {
             String[] info = str.split("[T]{1}");
 
@@ -150,6 +171,11 @@ public class FetchMarsWeather {
             return result;
         }
 
+        /**
+         * returns the string month
+         * @param month "integer" version of month
+         * @return string version of month
+         */
         public String returnStringMonth(String month){
             switch(month) {
                 case "01":
@@ -187,7 +213,7 @@ public class FetchMarsWeather {
             ProgressBar pg = (ProgressBar) marsWeatherActivity.findViewById(R.id.weatherProgressBar);
             pg.setVisibility(View.GONE);
 
-            marsWeatherActivity.recievedWeatherData(weatherData);
+            marsWeatherActivity.receivedWeatherData(weatherData);
         }
     }
 
